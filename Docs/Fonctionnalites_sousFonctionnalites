@@ -1,14 +1,21 @@
 Pour les visiteurs :
 
+Fonc. principales:
+- Inscription
 - Droit de vote
+
+Fonc. secondaire:
 - recherche de sondage par theme/mot clé
-- 
 
-Membre :
 
+Membres :
+
+Fonc. principales:
 - Droit de vote
-- recherche de sondage par theme/mot clé
-- modification du profil
 - créer un sondage
 - modifier/supprimer sondage
+
+Fonc. secondaires:
+- recherche de sondage par theme/mot clé
+- modification du profil
 - suivi de ses sondages
