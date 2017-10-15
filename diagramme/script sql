@@ -1,0 +1,93 @@
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
+
+
+#------------------------------------------------------------
+# Table: utilisateur
+#------------------------------------------------------------
+
+CREATE TABLE utilisateur(
+        idUser   int (11) Auto_increment  NOT NULL ,
+        name     Char (25) NOT NULL ,
+        password Char (25) NOT NULL ,
+        admin    Bool NOT NULL ,
+        PRIMARY KEY (idUser )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: sondage
+#------------------------------------------------------------
+
+CREATE TABLE sondage(
+        idSondage int (11) Auto_increment  NOT NULL ,
+        titre     Char (25) NOT NULL ,
+        dateFin   Date NOT NULL ,
+        postDate  Date NOT NULL ,
+        idUser    Int NOT NULL ,
+        PRIMARY KEY (idSondage )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: propositions
+#------------------------------------------------------------
+
+CREATE TABLE propositions(
+        idProp      int (11) Auto_increment  NOT NULL ,
+        proposition Char (100) NOT NULL ,
+        idSondage   Int NOT NULL ,
+        PRIMARY KEY (idProp ,idSondage )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: reponses
+#------------------------------------------------------------
+
+CREATE TABLE reponses(
+        dateClassement Date NOT NULL ,
+        idSondage      Int NOT NULL ,
+        idUser         Int NOT NULL ,
+        PRIMARY KEY (idSondage ,idUser )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: commentaire
+#------------------------------------------------------------
+
+CREATE TABLE commentaire(
+        idcomm    int (11) Auto_increment  NOT NULL ,
+        contenu   Char (2000) NOT NULL ,
+        dateEnvoi Date NOT NULL ,
+        idSondage Int NOT NULL ,
+        idUser    Int NOT NULL ,
+        PRIMARY KEY (idcomm ,idSondage ,idUser )
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: classe
+#------------------------------------------------------------
+
+CREATE TABLE classe(
+        ordre             int (11) Auto_increment  NOT NULL ,
+        idProp            Int NOT NULL ,
+        idSondage         Int NOT NULL ,
+        idSondage_sondage Int NOT NULL ,
+        idUser            Int NOT NULL ,
+        PRIMARY KEY (idProp ,idSondage ,idSondage_sondage ,idUser )
+)ENGINE=InnoDB;
+
+ALTER TABLE sondage ADD CONSTRAINT FK_sondage_idUser FOREIGN KEY (idUser) REFERENCES utilisateur(idUser);
+ALTER TABLE propositions ADD CONSTRAINT FK_propositions_idSondage FOREIGN KEY (idSondage) REFERENCES sondage(idSondage);
+ALTER TABLE reponses ADD CONSTRAINT FK_reponses_idSondage FOREIGN KEY (idSondage) REFERENCES sondage(idSondage);
+ALTER TABLE reponses ADD CONSTRAINT FK_reponses_idUser FOREIGN KEY (idUser) REFERENCES utilisateur(idUser);
+ALTER TABLE commentaire ADD CONSTRAINT FK_commentaire_idSondage FOREIGN KEY (idSondage) REFERENCES sondage(idSondage);
+ALTER TABLE commentaire ADD CONSTRAINT FK_commentaire_idUser FOREIGN KEY (idUser) REFERENCES utilisateur(idUser);
+ALTER TABLE classe ADD CONSTRAINT FK_classe_idProp FOREIGN KEY (idProp) REFERENCES propositions(idProp);
+ALTER TABLE classe ADD CONSTRAINT FK_classe_idSondage FOREIGN KEY (idSondage) REFERENCES sondage(idSondage);
+ALTER TABLE classe ADD CONSTRAINT FK_classe_idSondage_sondage FOREIGN KEY (idSondage_sondage) REFERENCES sondage(idSondage);
+ALTER TABLE classe ADD CONSTRAINT FK_classe_idUser FOREIGN KEY (idUser) REFERENCES utilisateur(idUser);
