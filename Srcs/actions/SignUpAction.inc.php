@@ -1,6 +1,8 @@
 <?php
 
 require_once("actions/Action.inc.php");
+//require_once("../views/templates/signupform.inc.php");
+require_once("../views/templates/signupform.inc.php");
 
 class SignUpAction extends Action {
 
@@ -23,6 +25,12 @@ class SignUpAction extends Action {
 	public function run() {
 		/* TODO START */
 		/* TODO END */
+        $newUser = new Database();
+        $nickname = $_POST['signUpLogin'];
+        $password = $_POST['signUpPassword'];
+        //$password2 = $_POST['signUpPassword2'];
+        var_dump($nickname, $password);
+        $newUser->addUser($nickname, $password);
 	}
 
 	private function setSignUpFormView($message) {
