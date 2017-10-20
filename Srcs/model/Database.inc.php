@@ -24,7 +24,7 @@ class Database {
 		$this->connection = new PDO($url, $dbLogin, $dbPass);
 		if (!$this->connection) die("impossible d'ouvrir la base de données");
 		$this->createDataBase();
-		//var_dump($this->addUser("root", "password"));
+		var_dump($this->updateUser("tres", "azerty"));
 	}
 
 
@@ -205,8 +205,15 @@ class Database {
 	 * @return boolean|string True si le mot de passe a été modifié, un message d'erreur sinon.
 	 */
 	public function updateUser($nickname, $password) {
-		/* TODO START */
-		/* TODO END */
+		$elbool = $this->checkPasswordValidity($password);
+		if($elbool === true) {
+			$this->connection->exec("UPDATE users 
+										SET users.password=\"".$this->hashpass($password)."\"
+										WHERE nickname=\"$nickname\"");
+			return true;
+		} else {
+			return "Le mot de passe doit contenir entre 3 et 10 caractères.";
+		}
 	  return true;
 	}
 
