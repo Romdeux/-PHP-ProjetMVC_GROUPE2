@@ -2,9 +2,6 @@
 /*require_once("model/Survey.inc.php");
 require_once("model/Response.inc.php");*/
 
-new Database();
-
-
 
 class Database {
 
@@ -24,7 +21,7 @@ class Database {
 		$this->connection = new PDO($url, $dbLogin, $dbPass);
 		if (!$this->connection) die("impossible d'ouvrir la base de données");
 		$this->createDataBase();
-		var_dump($this->updateUser("tres", "azerty"));
+		$surv = new Survey("root","Salut!");
 	}
 
 
@@ -225,9 +222,12 @@ class Database {
 	 * @return boolean True si la sauvegarde a été réalisée avec succès, false sinon.
 	 */
 	public function saveSurvey($survey) {
-		/* TODO START */
-		/* TODO END */
-		return true;
+		if($this->connection->exec("INSERT INTO surveys 
+									VALUES (".$survey->getId().",'".$survey->getOwner()."','".$survey->getQuestion()."')")) {
+			return true ;
+		} else {
+			return false ;
+		}
 	}
 
 	/**
@@ -237,9 +237,12 @@ class Database {
 	 * @return boolean True si la sauvegarde a été réalisée avec succès, false sinon.
 	 */
 	private function saveResponse($response) {
-		/* TODO START */
-		/* TODO END */
-		return true;
+		if($this->connection->exec("INSERT INTO responses 
+									VALUES (".$response->getId().",'".$response->getSurvey()."','".$response->getTitle()."','".$response->getCount()."')")) {
+			return true ;
+		} else {
+			return false ;
+		}
 	}
 
 	/**
