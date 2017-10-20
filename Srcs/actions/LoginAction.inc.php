@@ -14,8 +14,17 @@ class LoginAction extends Action {
 	 * @see Action::run()
 	 */
 	public function run() {
-  	/* TODO START */
-  	/* TODO END */
+		$name = $_POST['nickname'];
+		$password = $_POST['password'];
+
+		
+		$queryDB = $this->database->checkPassword($name,$password);
+		
+		if($queryDB) {
+			$_SESSION['login'] = $name;
+		} else {
+			echo "<script> alert(\"Pseudo ou mot de passe incorrect.\")</script>";
+		}
 	}
 
 }
