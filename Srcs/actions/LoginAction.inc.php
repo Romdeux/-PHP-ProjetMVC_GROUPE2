@@ -22,6 +22,7 @@ class LoginAction extends Action {
 		
 		if($queryDB) {
 			$_SESSION['login'] = $name;
+            $this->setView(getViewByName("Default"));
 		} else {
 			echo "<script> alert(\"Pseudo ou mot de passe incorrect.\")</script>";
 		}
