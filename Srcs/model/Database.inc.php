@@ -14,14 +14,13 @@ class Database {
 	public function __construct() {
 		$dbHost = "localhost";
 		$dbBd = "sondages";
-		$dbPass = "Asperge23@";
+		$dbPass = "";
 		$dbLogin = "root";
 		$url = 'mysql:host='.$dbHost;
 		//$url = 'sqlite:database.sqlite';
 		$this->connection = new PDO($url, $dbLogin, $dbPass);
 		if (!$this->connection) die("impossible d'ouvrir la base de données");
 		$this->createDataBase();
-		$surv = new Survey("root","Salut!");
 	}
 
 
@@ -236,7 +235,7 @@ class Database {
 	 * @param Response $response Réponse à sauvegarder.
 	 * @return boolean True si la sauvegarde a été réalisée avec succès, false sinon.
 	 */
-	private function saveResponse($response) {
+	public function saveResponse($response) {
 		if($this->connection->exec("INSERT INTO responses 
 									VALUES (".$response->getId().",'".$response->getSurvey()."','".$response->getTitle()."','".$response->getCount()."')")) {
 			return true ;
