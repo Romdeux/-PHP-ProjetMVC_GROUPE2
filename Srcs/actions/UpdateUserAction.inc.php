@@ -22,6 +22,24 @@ class UpdateUserAction extends Action {
 	 */
 	public function run() {
 		/* TODO START */
+		$updatePassword=$_POST['updatePassword'];
+		$updatePassword2=$_POST['updatePassword2'];
+
+        if (strcmp($updatePassword, $updatePassword2) !== 0) {
+            $this->setMessageView("Le mot de passe et sa confirmation sont différents.");
+        }
+        else{
+        	$update=$this->database->updateUser($nickname, $password)
+        }
+		if($update == true){
+        	$this->setMessageView("Modification enregistrée.");
+        }else{
+
+		}
+
+
+
+
 		/* TODO END */
 	}
 
