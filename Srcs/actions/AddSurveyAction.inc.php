@@ -41,7 +41,7 @@ class AddSurveyAction extends Action {
 		}
         else {
             if($question!=''){
-                if($_POST['responseSurvey1']=='' && $_POST['responseSurvey2']==''){
+                if($_POST['responseSurvey1']=='' or $_POST['responseSurvey2']==''){
                     $this->setMessageView("Il faut saisir au moins 2 réponses.");
                 }
                 else{
