@@ -333,45 +333,41 @@ class Database
      */
     public function updateSurvey($survey)
     {
-
-        //cette partie sera gerer par la view (temporaire)
-        echo "entrer la nouvelle question";
         $newQuestion = fgets(STDIN);
 
-        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE owner = $survey->getOwner()")) ;
+        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE owner = ".$survey->getOwner())) ;
         {
             return true;
-        }
+        } else {
+			return false;
+		}
     }
 
 
     public function updateResponse($response)
     {
-
-        //cette partie sera gerer par la view (temporaire)
-        echo "entrer la nouvelle reponse";
         $newResponse = fgets(STDIN);
 
-        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE  response = $response->getSurvey()")) ;
-
+        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE  response = ".$response->getSurvey())) ;
         {
             return true;
-        }
+        } else {
+			return false;
+		}
 
     }
 
 
     public function deleteSurvey($survey)
     {
-
-        //cette partie sera gerer par la view (temporaire)
-        echo "entrer la nouvelle question";
         $newQuestion = fgets(STDIN);
 
-        if ($this->connection->exec("DELETE FROM surveys WHERE  id = $survey->getId()")) ;
+        if ($this->connection->exec("DELETE FROM surveys WHERE  id = ".$survey->getId())) ;
         {
             return true;
-        }
+        } else {
+			return false;
+		}
     }
 
 }
