@@ -50,7 +50,7 @@ class AddSurveyAction extends Action {
                     $this->database->saveSurvey($survey);
                     for($i=1 ; $i<=5; $i++){
                         if($_POST['responseSurvey'.$i]!=''){
-                            $tampon=new Response($question, $Response[$i],$i);
+                            $tampon=new Response($survey, $Response[$i],$i);
                             $this->database->saveResponse($tampon);
                         }
                     }

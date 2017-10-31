@@ -16,7 +16,7 @@ class Database
     {
         $dbHost = "localhost";
         $dbBd = "sondages";
-        $dbPass = "";
+        $dbPass = "Asperge23@";
         $dbLogin = "root";
         $url = 'mysql:host=' . $dbHost;
         //$url = 'sqlite:database.sqlite';
@@ -233,6 +233,7 @@ class Database
     {
         if ($this->connection->exec("INSERT INTO surveys 
 									VALUES (" . $survey->getId() . ",'" . $survey->getOwner() . "','" . $survey->getQuestion() . "')")) {
+			$survey->setId($this->connection->lastInsertId());
             return true;
         } else {
             return false;
@@ -247,8 +248,9 @@ class Database
      */
     public function saveResponse($response)
     {
+		var_dump("INSERT INTO responses VALUES ( null" . $response->getId() . "," . $response->getSurvey()->getId() . ",'" . $response->getTitle() . "','" . $response->getCount() . "')");
         if ($this->connection->exec("INSERT INTO responses 
-									VALUES (" . $response->getId() . ",'" . $response->getSurvey() . "','" . $response->getTitle() . "','" . $response->getCount() . "')")) {
+									VALUES ( null" . $response->getId() . "," . $response->getSurvey()->getId() . ",'" . $response->getTitle() . "','" . $response->getCount() . "')")) {
             return true;
         } else {
             return false;
@@ -335,8 +337,7 @@ class Database
     {
         $newQuestion = fgets(STDIN);
 
-        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE owner = ".$survey->getOwner())) ;
-        {
+        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE owner = ".$survey->getOwner())) {
             return true;
         } else {
 			return false;
@@ -348,8 +349,7 @@ class Database
     {
         $newResponse = fgets(STDIN);
 
-        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE  response = ".$response->getSurvey())) ;
-        {
+        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE  response = ".$response->getSurvey())) {
             return true;
         } else {
 			return false;
@@ -362,8 +362,7 @@ class Database
     {
         $newQuestion = fgets(STDIN);
 
-        if ($this->connection->exec("DELETE FROM surveys WHERE  id = ".$survey->getId())) ;
-        {
+        if ($this->connection->exec("DELETE FROM surveys WHERE  id = ".$survey->getId())) {
             return true;
         } else {
 			return false;
