@@ -29,13 +29,13 @@ class UpdateUserAction extends Action {
             $this->setMessageView("Le mot de passe et sa confirmation sont différents.");
         }
         else{
-        	$update=$this->database->updateUser($nickname, $password)
+        	$update=$this->database->updateUser($_SESSION['login'], $updatePassword);
+			if($update === true){
+				$this->setMessageView("Modification enregistrée.");
+			} else {
+				$this->setMessageView($update);
+			}
         }
-		if($update == true){
-        	$this->setMessageView("Modification enregistrée.");
-        }else{
-
-		}
 
 
 
