@@ -33,7 +33,6 @@ class AddSurveyAction extends Action {
             $Response[$i] = htmlentities($_POST['responseSurvey'.$i]);
         }
         
-         var_dump($_POST);
         
         if ($this->getSessionLogin()===null) {
 			$this->setMessageView("Vous devez être authentifié.", "alert-error");
@@ -50,7 +49,7 @@ class AddSurveyAction extends Action {
                     $this->database->saveSurvey($survey);
                     for($i=1 ; $i<=5; $i++){
                         if($_POST['responseSurvey'.$i]!=''){
-                            $tampon=new Response($survey, $Response[$i],$i);
+                            $tampon=new Response($survey, $Response[$i],0);
                             $this->database->saveResponse($tampon);
                         }
                     }

@@ -16,7 +16,7 @@ class Database
     {
         $dbHost = "localhost";
         $dbBd = "sondages";
-        $dbPass = "Asperge23@";
+        $dbPass = "";
         $dbLogin = "root";
         $url = 'mysql:host=' . $dbHost;
         //$url = 'sqlite:database.sqlite';
@@ -263,10 +263,14 @@ class Database
      * @param string $owner Pseudonyme de l'utilisateur.
      * @return array(Survey)|boolean Sondages trouvés par la fonction ou false si une erreur s'est produite.
      */
-    public function loadSurveysByOwner($owner)
-    {
-        /* TODO START */
-        /* TODO END */
+    public function loadSurveysByOwner($owner){
+		$requete = "SELECT surveys.question, responses.title, responses.count, responses.id FROM surveys INNER JOIN responses ON surveys.id = responses.id_survey WHERE surveys.owner = \"$owner\"";
+        $result = $this->connection->query($requete);
+		if ($result === false) {
+            return false;
+        } else {
+			return $result;
+		}
     }
 
     /**
