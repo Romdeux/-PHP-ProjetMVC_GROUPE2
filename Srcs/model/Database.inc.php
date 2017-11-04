@@ -16,7 +16,7 @@ class Database
     {
         $dbHost = "localhost";
         $dbBd = "sondages";
-        $dbPass = "";
+        $dbPass = "Asperge23@";
         $dbLogin = "root";
         $url = 'mysql:host=' . $dbHost;
         //$url = 'sqlite:database.sqlite';
