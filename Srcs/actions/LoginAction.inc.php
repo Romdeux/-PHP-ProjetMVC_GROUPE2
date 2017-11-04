@@ -25,6 +25,7 @@ class LoginAction extends Action {
             $this->setView(getViewByName("Default"));
 		} else {
 			echo "<script> alert(\"Pseudo ou mot de passe incorrect.\")</script>";
+            $this->setView(getViewByName("Default"));
 		}
 	}
 
