@@ -158,11 +158,12 @@ class Database
 				$mdp = $row['password'];
 			}
 
-
-			if ($this->hashpass($password) == $mdp) {
-				return true;
-			} else {
-				return false;
+			if(isset($mdp)) {
+				if ($this->hashpass($password) == $mdp) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		return false;
@@ -284,8 +285,13 @@ class Database
      */
     public function loadSurveysByKeyword($keyword)
     {
-        /* TODO START */
-        /* TODO END */
+		$requete = "SELECT surveys.question, surveys.owner, responses.title, responses.count, responses.id FROM surveys INNER JOIN responses ON surveys.id = responses.id_survey WHERE surveys.question LIKE '%$keyword%'";
+        $result = $this->connection->query($requete);
+		if ($result === false) {
+            return false;
+        } else {
+			return $result;
+		}
     }
 
 

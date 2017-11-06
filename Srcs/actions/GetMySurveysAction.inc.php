@@ -1,8 +1,6 @@
 <?php
 
 require_once("actions/Action.inc.php");
-require_once("model/Survey.inc.php");
-require_once("model/Response.inc.php");
 
 class GetMySurveysAction extends Action {
 
@@ -15,16 +13,16 @@ class GetMySurveysAction extends Action {
 	 * @see Action::run()
 	 */
 	public function run() {
-		$pseudoglobal = "";
+		$fauxglobal = "";
 		$Solosondage;
 		$Soloresponse;
 		$Sondages = array();
 		$c = -1;
 		
 		foreach($this->database->loadSurveysByOwner($_SESSION["login"]) as $foo) {
-			if($foo['question'] != $pseudoglobal) {
-				$pseudoglobal = $foo['question'];
-				$Solosondage = new Survey($_SESSION["login"], $pseudoglobal);
+			if($foo['question'] != $fauxglobal) {
+				$fauxglobal = $foo['question'];
+				$Solosondage = new Survey($_SESSION["login"], $fauxglobal);
 				array_push($Sondages, $Solosondage);
 				$c++;
 			}
