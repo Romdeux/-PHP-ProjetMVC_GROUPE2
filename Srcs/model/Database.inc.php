@@ -59,6 +59,12 @@ class Database
 									title CHAR(255) NOT NULL ,
 									count INT,
 									PRIMARY KEY (id)) ENGINE = InnoDB;");
+	          
+        $this->connection->exec("CREATE TABLE IF NOT EXISTS comments (
+                                    id INT NOT NULL AUTO_INCREMENT ,
+                                    owner CHAR(20) NOT NULL ,
+                                    comment CHAR(255) NOT NULL ,
+                                    PRIMARY KEY (id)) ENGINE = InnoDB;");
     }
 
     /**
