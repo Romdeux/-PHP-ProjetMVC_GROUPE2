@@ -13,8 +13,26 @@ class GetMySurveysAction extends Action {
 	 * @see Action::run()
 	 */
 	public function run() {
-		/* TODO START */
-		/* TODO END */
+		$fauxglobal = "";
+		$Solosondage;
+		$Soloresponse;
+		$Sondages = array();
+		$c = -1;
+		
+		foreach($this->database->loadSurveysByOwner($_SESSION["login"]) as $foo) {
+			if($foo['question'] != $fauxglobal) {
+				$fauxglobal = $foo['question'];
+				$Solosondage = new Survey($_SESSION["login"], $fauxglobal);
+				array_push($Sondages, $Solosondage);
+				$c++;
+			}
+			$Soloresponse = new Response($Solosondage, $foo['title'], intval($foo['count']));
+			$Soloresponse->setId(intval($foo['id']));
+			$Sondages[$c]->addResponse($Soloresponse);
+		}
+		
+		$this->setView(getViewByName("Surveys"));
+		$this->getView()->setSurveys($Sondages);
 	}
 
 }

@@ -18,17 +18,19 @@ function getAction() {
 	else $action = $_REQUEST['action'];
 
 	$actions = array('Default',
-			/*'SignUpForm',
+			'SignUpForm',
 			'SignUp',
 			'Logout',
 			'Login',
 			'UpdateUserForm',
 			'UpdateUser',
+			'UpdateSurveyForm',
+			'UpdateSurvey',
 			'AddSurveyForm',
 			'AddSurvey',
 			'GetMySurveys',
 			'Search',
-			'Vote'*/);
+			'Vote');
 
 	if (!in_array($action, $actions)) $action = 'Default';
 	return getActionByName($action);
@@ -37,7 +39,9 @@ function getAction() {
 $action = getAction();
 $action->run();
 $view = $action->getView();
-$action->getView()->setLogin($action->getSessionLogin());
-$view->run();
+if ($view !== NULL){
+	$action->getView()->setLogin($action->getSessionLogin());
+    $view->run();
+}
 ?>
 
