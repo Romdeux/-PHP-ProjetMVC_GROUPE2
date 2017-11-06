@@ -151,19 +151,21 @@ class Database
      */
     public function checkPassword($nickname, $password)
     {
-        $requete = "SELECT password FROM users WHERE nickname = '$nickname'";
+		if($nickname!='' && $password!='') {
+			$requete = "SELECT password FROM users WHERE nickname = '$nickname'";
 
-        foreach ($this->connection->query($requete) as $row) {
-            $mdp = $row['password'];
-        }
+			foreach ($this->connection->query($requete) as $row) {
+				$mdp = $row['password'];
+			}
 
 
-        if ($this->hashpass($password) == $mdp) {
-            return true;
-        } else {
-            return false;
-        }
-
+			if ($this->hashpass($password) == $mdp) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
     }
 
     /**
@@ -295,8 +297,11 @@ class Database
      */
     public function vote($id)
     {
-        /* TODO START */
-        /* TODO END */
+        if($this->connection->exec("UPDATE responses SET count = count + 1 WHERE id = $id")) {
+			return true;
+		} else {
+			return false;
+		}
     }
 
     /**

@@ -33,7 +33,6 @@ class GetMySurveysAction extends Action {
 			$Sondages[$c]->addResponse($Soloresponse);
 		}
 		
-		
 		$this->setView(getViewByName("Surveys"));
 		$this->getView()->setSurveys($Sondages);
 	}

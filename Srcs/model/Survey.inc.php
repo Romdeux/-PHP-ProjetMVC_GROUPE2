@@ -46,9 +46,13 @@ class Survey {
 	}
 	
 	public function computePercentages() {
-		
-		/* TODO END */
+		$total = 0;
+		for($i = 0; $i < count($this->responses); $i++) {
+			$total += $this->responses[$i]->getCount();
+		}
+		for($i = 0; $i < count($this->responses); $i++) {
+			$this->responses[$i]->computePercentage($total);
+		}
 	}
-
 }
 ?>

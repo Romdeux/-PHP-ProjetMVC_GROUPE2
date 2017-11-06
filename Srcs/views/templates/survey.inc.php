@@ -8,9 +8,9 @@
 		echo "<div class=\"fluid-row\">";
 			echo "<div class=\"span2\">".$response->getTitle()."</div>";
 			echo "<div class=\"span2 progress progress-striped active\">";
-				echo "<div class=\"bar\" style=\"width: "./*$response->computePercentage().*/"20%\"></div>";
+				echo "<div class=\"bar\" style=\"width: ".$response->getPercentage()."%\"></div>";
 			echo "</div>";
-			echo "<span class=\"span1\">"./*$response->computePercentage().*/"(20%)</span>";
+			echo "<span class=\"span1\">(". $response->getPercentage() ."%)</span>";
 			echo "<form class=\"span1\" method=\"post\" action=\"".$_SERVER['PHP_SELF'].'?action=Vote'."\">";
 				echo "<input type=\"hidden\" name=\"responseId\" value=\"".$response->getId()."\"> ";
 				echo "<input type=\"submit\" style=\"margin-left:5px\" class=\"span1 btn btn-small btn-danger\" value=\"Voter\">";
@@ -45,6 +45,3 @@
 		
 	</div>
 </li>
-
-
-

@@ -19,8 +19,11 @@ class Response {
 	}
 	
 	public function computePercentage($total) {
-		/* TODO START */
-		/* TODO END */
+		if($this->count != 0) {
+			$this->percentage = round(($this->count/$total * 100),2) ;
+			} else {
+			$this->percentage = 0;
+		}
 	}
 
 	public function getId() {
@@ -42,6 +45,6 @@ class Response {
 	public function getPercentage() {
 		return $this->percentage;
 	}
-
 }
+
 ?>
