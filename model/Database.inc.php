@@ -59,12 +59,6 @@ class Database
 									title CHAR(255) NOT NULL ,
 									count INT,
 									PRIMARY KEY (id)) ENGINE = InnoDB;");
-	          
-        $this->connection->exec("CREATE TABLE IF NOT EXISTS comments (
-                                    id INT NOT NULL AUTO_INCREMENT ,
-                                    owner CHAR(20) NOT NULL ,
-                                    comment CHAR(255) NOT NULL ,
-                                    PRIMARY KEY (id)) ENGINE = InnoDB;");
     }
 
     /**
@@ -157,20 +151,23 @@ class Database
      */
     public function checkPassword($nickname, $password)
     {
-		if($nickname!='' && $password!='') {
-			$requete = "SELECT password FROM users WHERE nickname = '$nickname'";
+		if($this->checkNicknameValidity($nickname)) {
+			if($nickname!='' && $password!='') {
+				$requete = "SELECT password FROM users WHERE nickname = '$nickname'";
+				var_dump($requete);
+				foreach ($this->connection->query($requete) as $row) {
+					$mdp = $row['password'];
+				}
 
-			foreach ($this->connection->query($requete) as $row) {
-				$mdp = $row['password'];
-			}
-
-			if(isset($mdp)) {
-				if ($this->hashpass($password) == $mdp) {
-					return true;
-				} else {
-					return false;
+				if(isset($mdp)) {
+					if ($this->hashpass($password) == $mdp) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			}
+			return false;
 		}
 		return false;
     }
@@ -204,7 +201,7 @@ class Database
             return "Le mot de passe doit contenir entre 3 et 10 caractères.";
         }
 
-        $this->connection->exec("INSERT INTO users (nickname, password) VALUES ('$nickname', '" . $this->hashpass($password) . "');");
+        return "INSERT INTO users (nickname, password) VALUES ('$nickname', '" . $this->hashpass($password) . "');";
 
         return true;
     }
@@ -355,11 +352,9 @@ class Database
      * @param Survey $survey Sondage à modifier.
      * @return boolean True si la modification a été réalisée avec succès, false sinon.
      */
-    public function updateSurvey($survey)
-    {
-        $newQuestion = fgets(STDIN);
+    public function updateSurvey($survey, $newQuestion){
 
-        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE owner = ".$survey->getOwner())) {
+        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE id = ".$survey->getId())) {
             return true;
         } else {
 			return false;
@@ -367,22 +362,17 @@ class Database
     }
 
 
-    public function updateResponse($response)
-    {
-        $newResponse = fgets(STDIN);
+    public function updateResponse($response, $newResponse){
 
-        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE  response = ".$response->getSurvey())) {
+        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE id = ".$response->getid())) {
             return true;
         } else {
 			return false;
 		}
 
     }
-
-
-    public function deleteSurvey($survey)
-    {
-        $newQuestion = fgets(STDIN);
+	
+    public function deleteSurvey($survey){
 
         if ($this->connection->exec("DELETE FROM surveys WHERE  id = ".$survey->getId())) {
             return true;
