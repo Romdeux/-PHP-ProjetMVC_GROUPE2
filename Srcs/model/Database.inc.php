@@ -124,12 +124,14 @@ class Database
         foreach ($this->connection->query($requete) as $row) {
             $noms[] = $row['nickname'];
         }
-
-        foreach ($noms as $row) {
-            if ($nickname == $row) {
-                return false;
-            }
-        }
+		
+		if(isset($noms)) {
+			foreach ($noms as $row) {
+				if ($nickname == $row) {
+					return false;
+				}
+			}
+		}
         return true;
     }
 
