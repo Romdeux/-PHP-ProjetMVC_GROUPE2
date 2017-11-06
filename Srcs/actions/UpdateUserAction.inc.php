@@ -22,21 +22,25 @@ class UpdateUserAction extends Action {
 	 */
 	public function run() {
 		/* TODO START */
+		/** On recupere les valeurs du formulaire ($_POST) dans des variables */
 		$updatePassword=$_POST['updatePassword'];
 		$updatePassword2=$_POST['updatePassword2'];
 
         if (strcmp($updatePassword, $updatePassword2) !== 0) {
-            $this->setMessageView("Le mot de passe et sa confirmation sont différents.");
+        	/** On vérifie que le mot de passe et la confirmation soit identique */
+            $this->setUpdateUserFormView("Le mot de passe et sa confirmation sont différents.");
         }
         else{
+        	/** On utilise la méthode de la classe Database et on définie ses variables */
         	$update=$this->database->updateUser($_SESSION['login'], $updatePassword);
-			if($update === true){
-				$this->setMessageView("Modification enregistrée.");
-			} else {
-				$this->setMessageView($update);
-			}
+            if($update === true){
+            	/** On affiche a l'utilisateur que le mot de passe à bien était modifié */
+                $this->setMessageView("Modification enregistrée.");
+            } else {
+            	/** On renvoie une erreur à l'utilisateur et on affiche le formulaire */
+                $this->setUpdateUserFormView($update);
+            }
         }
-
 
 
 
