@@ -250,7 +250,6 @@ class Database
      */
     public function saveResponse($response)
     {
-		var_dump("INSERT INTO responses VALUES ( null" . $response->getId() . "," . $response->getSurvey()->getId() . ",'" . $response->getTitle() . "','" . $response->getCount() . "')");
         if ($this->connection->exec("INSERT INTO responses 
 									VALUES ( null" . $response->getId() . "," . $response->getSurvey()->getId() . ",'" . $response->getTitle() . "','" . $response->getCount() . "')")) {
             return true;
