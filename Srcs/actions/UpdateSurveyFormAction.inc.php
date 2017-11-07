@@ -30,8 +30,8 @@ class UpdateSurveyFormAction extends Action {
 			return;
 		}
 		
+		$targetsurvey = $this->database->loadSurveyById(intval($_POST['Id']));
 		$this->setView(getViewByName("UpdateSurveyForm"));
-		$targetsurvey = $this->database->loadSurveyById(1);
 		$this->getView()->setSurvey($targetsurvey);
 	}
 

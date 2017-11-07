@@ -62,6 +62,7 @@ class Database
 	          
         $this->connection->exec("CREATE TABLE IF NOT EXISTS comments (
 									id INT NOT NULL AUTO_INCREMENT ,
+									id_survey INT NOT NULL ,
 									owner CHAR(20) NOT NULL ,
 									comment CHAR(255) NOT NULL ,
 									PRIMARY KEY (id)) ENGINE = InnoDB;");
@@ -208,6 +209,14 @@ class Database
 
         return true;
     }
+	
+	public function addComment($owner, $idsurvey){
+		
+    }
+	
+	public function loadComment($id){
+		
+    }
 
     /**
      * Change le mot de passe d'un utilisateur.
@@ -274,8 +283,8 @@ class Database
      * @return array(Survey)|boolean Sondages trouvés par la fonction ou false si une erreur s'est produite.
      */
     public function loadSurveysByOwner($owner){
-		$requete = "SELECT surveys.question, responses.title, responses.count, responses.id FROM surveys INNER JOIN responses ON surveys.id = responses.id_survey WHERE surveys.owner = \"$owner\"";
-        $result = $this->connection->query($requete);
+		$requete = "SELECT surveys.id as idsurv, surveys.question, responses.title, responses.count, responses.id FROM surveys INNER JOIN responses ON surveys.id = responses.id_survey WHERE surveys.owner = \"$owner\"";
+		$result = $this->connection->query($requete);
 		if ($result === false) {
             return false;
         } else {

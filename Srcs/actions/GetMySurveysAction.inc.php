@@ -23,6 +23,7 @@ class GetMySurveysAction extends Action {
 			if($foo['question'] != $fauxglobal) {
 				$fauxglobal = $foo['question'];
 				$Solosondage = new Survey($_SESSION["login"], $fauxglobal);
+				$Solosondage->setId($foo['idsurv']);
 				array_push($Sondages, $Solosondage);
 				$c++;
 			}

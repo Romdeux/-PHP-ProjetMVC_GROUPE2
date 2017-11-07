@@ -19,5 +19,3 @@ class UpdateSurveyFormView extends View {
 	}
 }
 ?>
-
-

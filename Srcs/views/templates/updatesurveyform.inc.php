@@ -1,5 +1,5 @@
 <?php 
-
+var_dump($_POST);
 function generateInputForResponse($n, $str, $id) {
 	?>
 	<div class="control-group">
@@ -30,13 +30,13 @@ function generateInputForResponse($n, $str, $id) {
 		</div>
 		<br>
 		<?php 
+			$responses = $this->survey->getResponses();
 			for ($i = 0; $i <= 4; $i++)
-				if(null !== $this->survey->getResponses()[$i]->getTitle()) {
-					generateInputForResponse($i,$this->survey->getResponses()[$i]->getTitle(),$this->survey->getResponses()[$i]->getId());
+				if(isset($responses[$i])) {
+					generateInputForResponse($i,$responses[$i]->getTitle(),$responses[$i]->getId());
 				} else {
 					generateInputForResponse($i, "", "");
 				}
-				
 		?>
 	</div>
 	<div class="modal-footer">
