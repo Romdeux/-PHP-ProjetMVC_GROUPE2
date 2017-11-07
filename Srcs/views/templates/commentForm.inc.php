@@ -4,8 +4,6 @@
             <li class="media well border-secondary-left">
                 <div class="control-group">
                     <div class="span2 offset5">
-                    <a href="#"><span class="glyphicon glyphicon-trash "></span></a>
-                    <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
                     </div>
                     <blockquote class="blockquote">
                         <h5>Commentaire</h5>
@@ -20,7 +18,7 @@
 </div>
 
 <div class="container">
-<form class="span7 offset2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+<form class="span7 offset2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?action=Comment" >
         <div class="media well">
         <h5 class="media-heading">• Ajouter un commentaire</h5>
         <input type="text" name="commentaire" class="span6"/>

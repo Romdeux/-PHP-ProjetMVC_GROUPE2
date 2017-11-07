@@ -9,9 +9,6 @@ class UpdateSurveyAction extends Action {
 	public function run() {
         $question = htmlentities($_POST['questionSurvey']);
         
-		var_dump($_POST);
-        
-        
         if ($this->getSessionLogin()===null) {
 			$this->setMessageView("Vous devez être authentifié.", "alert-error");
 			return;
@@ -23,7 +20,7 @@ class UpdateSurveyAction extends Action {
                 }
                 else{
                     $this->database->updateSurvey($_POST['SurveyId'],$question);
-                    for($i=0 ; $i<5; $i++){
+                    for($i=1 ; $i<=5; $i++){
                         if($_POST['responseSurvey'.$i]!=''){
                             $this->database->updateResponse($_POST['ResponseId'.$i], $_POST['responseSurvey'.$i]);
                         }

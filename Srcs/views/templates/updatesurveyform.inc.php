@@ -1,12 +1,11 @@
 <?php 
-var_dump($_POST);
 function generateInputForResponse($n, $str, $id) {
 	?>
 	<div class="control-group">
 		<label class="control-label" for="responseSurvey<?php echo $n; ?>">Réponse <?php echo $n + 1; ?></label>
 		<div class="controls">
-			<input class="span3" type="text" name="responseSurvey<?php echo $n; ?>" placeholder="Réponse <?php echo $n; ?>" value="<?php echo $str ?>">
-			<input style="display:none;" type="text" name="ResponseId<?php echo $n; ?>" value="<?php echo $id ?>">
+			<input class="span3" type="text" name="responseSurvey<?php echo $n + 1; ?>" placeholder="Réponse <?php echo $n + 1; ?>" value="<?php echo $str ?>">
+			<input style="display:none;" type="text" name="ResponseId<?php echo $n + 1; ?>" value="<?php echo $id ?>">
 		</div>
 	</div>
 <?php

@@ -2,7 +2,7 @@
 
 require_once("actions/Action.inc.php");
 
-class DeleteAction extends Action {
+class CommentAction extends Action {
 
 	/**
 	 * Récupère l'identifiant de la réponse choisie par l'utilisateur dans la variable
@@ -17,12 +17,8 @@ class DeleteAction extends Action {
 	 * @see Action::run()
 	 */	
 	public function run() {
+		$comment = $_POST['commentaire'];
 		
-		if($this->database->deleteSurvey(intval($_POST['Id']))) {
-			$this->setMessageView("Votre sondage a été supprimé. RIP", "alert-success");
-		} else {
-			$this->setMessageView("Erreur, seul le propriétaire peut supprimer son sondage", "alert-failure");
-		}
 	}
 
 }
