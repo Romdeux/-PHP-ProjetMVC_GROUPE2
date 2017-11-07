@@ -1,8 +1,6 @@
 <?php
 
 require_once("actions/Action.inc.php");
-//require_once("../views/templates/signupform.inc.php");
-//equire_once("views/templates/signupform.inc.php");
 
 class SignUpAction extends Action {
 

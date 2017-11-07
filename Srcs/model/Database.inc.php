@@ -16,7 +16,7 @@ class Database
     {
         $dbHost = "localhost";
         $dbBd = "sondages";
-        $dbPass = "Asperge23@";
+        $dbPass = "";
         $dbLogin = "root";
         $url = 'mysql:host=' . $dbHost;
         //$url = 'sqlite:database.sqlite';
@@ -210,25 +210,29 @@ class Database
         return true;
     }
 	
-	public function addComment($owner, $idsurvey){
-		/*TODO*/
+	public function addComments($owner, $comment){
+        if ($this->connection->exec("INSERT INTO comments (owner, comment) VALUES (" . $owner .", '" . $comment . "');")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 	
 	public function loadComment($id){
-		if(true) {
-			$requete = "SELECT * FROM comments WHERE id_survey = '$id'";
-			$retour = array();
-			$retour[0] = array();
-			$retour[1] = array();
-
-			foreach ($this->connection->query($requete) as $row) {
-				array_push($retour[0],$row['owner']);
-				array_push($retour[1],$row['comment']);
-			}
-			return $retour;
-		} else {
-			return false;
-		}
+//		if(true) {
+//			$requete = "SELECT * FROM comments WHERE id_survey = '$id'";
+//			$retour = array();
+//			$retour[0] = array();
+//			$retour[1] = array();
+//
+//			foreach ($this->connection->query($requete) as $row) {
+//				array_push($retour[0],$row['owner']);
+//				array_push($retour[1],$row['comment']);
+//			}
+//			return $retour;
+//		} else {
+//			return false;
+//		}
 	}
 
     /**

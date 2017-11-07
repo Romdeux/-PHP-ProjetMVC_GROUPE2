@@ -11,7 +11,7 @@ class CommentView extends View
 {
 	
     protected function displayBody() {
-        require("templates/commentform.inc.php");
+        require("templates/addcommentform.inc.php");
     }
 
     public function run()
