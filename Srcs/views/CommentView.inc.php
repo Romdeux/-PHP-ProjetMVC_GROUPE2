@@ -9,6 +9,7 @@ require_once("views/View.inc.php");
 
 class CommentView extends View
 {
+	
     protected function displayBody() {
         require("templates/commentform.inc.php");
     }
@@ -18,5 +19,7 @@ class CommentView extends View
 
 
     }
+	
+
 
 }

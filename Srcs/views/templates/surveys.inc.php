@@ -8,6 +8,7 @@
 				foreach ($this->surveys as $survey) {
 					$survey->computePercentages();
 					require("survey.inc.php");
+					require("commentform.inc.php");
 				}
 		?>
 	</ul>

@@ -4,7 +4,8 @@ require_once("views/View.inc.php");
 class SurveysView extends View {
 
 	private $surveys;
-
+	private $Comment;
+	private $Owner;
 	/**
 	 * Affiche la liste des sondages.
 	 *
@@ -29,6 +30,11 @@ class SurveysView extends View {
 	 public function setSurveys($surveys) {
 	 	 $this->surveys = $surveys;
 	 }
+	 
+	 public function setComment($comment,$owner) {
+		$this->Comment = $comment;
+		$this->Owner = $owner;
+	}
 	
 }
 ?>
