@@ -19,6 +19,7 @@ class CommentAction extends Action {
 	public function run() {
 		$comment = $_POST['commentaire'];
 		
+		/*TODO*/
 	}
 
 }

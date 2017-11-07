@@ -211,12 +211,25 @@ class Database
     }
 	
 	public function addComment($owner, $idsurvey){
-		
+		/*TODO*/
     }
 	
 	public function loadComment($id){
-		
-    }
+		if(true) {
+			$requete = "SELECT * FROM comments WHERE id_survey = '$id'";
+			$retour = array();
+			$retour[0] = array();
+			$retour[1] = array();
+
+			foreach ($this->connection->query($requete) as $row) {
+				array_push($retour[0],$row['owner']);
+				array_push($retour[1],$row['comment']);
+			}
+			return $retour;
+		} else {
+			return false;
+		}
+	}
 
     /**
      * Change le mot de passe d'un utilisateur.

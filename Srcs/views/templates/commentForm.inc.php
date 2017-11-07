@@ -5,18 +5,21 @@
                 <div class="control-group">
                     <div class="span2 offset5">
                     </div>
+					<?php
+					for($iterator = 0;$iterator < count($commentaires[1]) ; $iterator++ ) {
+					?>
                     <blockquote class="blockquote">
-                        <h5>Commentaire</h5>
+                        <h5><?php if(isset($commentaires[1][$iterator])) echo $commentaires[1][$iterator] ?></h5>
                         <footer class="blockquote-footer">
-                            <cite title="Source Title"></cite>
+                            <cite title="Source Title"><?php if(isset($commentaires[0][$iterator])) echo $commentaires[0][$iterator] ?></cite>
                         </footer>
-                    </blockquote>
+                    </blockquote>   
+					<?php } ?>
                 </div>
             </li>
         </ul>
     </div>
 </div>
-
 <div class="container">
 <form class="span7 offset2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?action=Comment" >
         <div class="media well">
