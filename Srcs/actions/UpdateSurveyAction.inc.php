@@ -7,11 +7,9 @@ require_once("actions/Action.inc.php");
 class UpdateSurveyAction extends Action {
 
 	public function run() {
-        /*$question = htmlentities($_POST['questionSurvey']);
-          
-        for ($i = 1; $i <= (count($_POST)-1) ; $i++){
-            $Response[$i] = htmlentities($_POST['responseSurvey'.$i]);
-        }
+        $question = htmlentities($_POST['questionSurvey']);
+        
+		var_dump($_POST);
         
         
         if ($this->getSessionLogin()===null) {
@@ -24,13 +22,10 @@ class UpdateSurveyAction extends Action {
                     $this->setMessageView("Il faut saisir au moins 2 réponses.");
                 }
                 else{
-                    
-                    $survey=new Survey($_SESSION['login'],$question);
-                    $this->database->saveSurvey($survey);
-                    for($i=1 ; $i<=5; $i++){
+                    $this->database->updateSurvey($_POST['SurveyId'],$question);
+                    for($i=0 ; $i<5; $i++){
                         if($_POST['responseSurvey'.$i]!=''){
-                            $tampon=new Response($survey, $Response[$i],0);
-                            $this->database->saveResponse($tampon);
+                            $this->database->updateResponse($_POST['ResponseId'.$i], $_POST['responseSurvey'.$i]);
                         }
                     }
                     $this->setMessageView("Merci, nous avons modifié votre sondage");
@@ -39,8 +34,7 @@ class UpdateSurveyAction extends Action {
             else{
                 $this->setMessageView("La question est obligatoire");
             }
-        }*/
-		
+        }
 	}
 
 	private function setAddSurveyFormView($message) {

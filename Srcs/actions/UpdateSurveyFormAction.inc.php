@@ -29,8 +29,10 @@ class UpdateSurveyFormAction extends Action {
 			$this->setMessageView("Vous devez être authentifié.", "alert-error");
 			return;
 		}
-		$this->database->loadSurveyById(1);
+		
 		$this->setView(getViewByName("UpdateSurveyForm"));
+		$targetsurvey = $this->database->loadSurveyById(1);
+		$this->getView()->setSurvey($targetsurvey);
 	}
 
 }

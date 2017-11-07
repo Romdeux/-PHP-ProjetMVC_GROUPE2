@@ -1,11 +1,12 @@
 <?php 
 
-function generateInputForResponse($n) {
+function generateInputForResponse($n, $str, $id) {
 	?>
 	<div class="control-group">
-		<label class="control-label" for="responseSurvey<?php echo $n; ?>">Réponse <?php echo $n; ?></label>
+		<label class="control-label" for="responseSurvey<?php echo $n; ?>">Réponse <?php echo $n + 1; ?></label>
 		<div class="controls">
-			<input class="span3" type="text" name="responseSurvey<?php echo $n; ?>" placeholder="Réponse <?php echo $n; ?>">
+			<input class="span3" type="text" name="responseSurvey<?php echo $n; ?>" placeholder="Réponse <?php echo $n; ?>" value="<?php echo $str ?>">
+			<input style="display:none;" type="text" name="ResponseId<?php echo $n; ?>" value="<?php echo $id ?>">
 		</div>
 	</div>
 <?php
@@ -14,7 +15,7 @@ function generateInputForResponse($n) {
 
 <form method="post" action="index.php?action=UpdateSurvey" class="modal">
 	<div class="modal-header">
-		<h3>Création d'un sondage</h3>
+		<h3>Modification d'un sondage :</h3>
 	</div>
 	<div class="form-horizontal modal-body">
 		<?php	if ($this->message!=="")
@@ -23,13 +24,19 @@ function generateInputForResponse($n) {
 		<div class="control-group">
 			<label class="control-label" for="questionSurvey">Question</label>
 			<div class="controls">
-				<input class="span3" type="text" name="questionSurvey" placeholder="Question">
+				<input class="span3" type="text" name="questionSurvey" placeholder="Question" value="<?php echo $this->survey->getQuestion() ?>">
+				<input style="display:none;" type="text" name="SurveyId" value="<?php echo $this->survey->getId() ?>">
 			</div>
 		</div>
 		<br>
 		<?php 
-			for ($i = 1; $i <= 5; $i++)
-				generateInputForResponse($i);
+			for ($i = 0; $i <= 4; $i++)
+				if(null !== $this->survey->getResponses()[$i]->getTitle()) {
+					generateInputForResponse($i,$this->survey->getResponses()[$i]->getTitle(),$this->survey->getResponses()[$i]->getId());
+				} else {
+					generateInputForResponse($i, "", "");
+				}
+				
 		?>
 	</div>
 	<div class="modal-footer">

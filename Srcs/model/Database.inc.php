@@ -351,39 +351,30 @@ class Database
     {
 		$requete = "SELECT * FROM surveys WHERE id = $id";
         $result = $this->connection->query($requete);
-		var_dump($result);
-		
 		foreach($result as $foo) {
-			var_dump($foo);
 			$survey = new Survey($foo['owner'], $foo['question']);
 			$survey->setId(intval($foo['id']));
-			var_dump($survey);
-			/*if($foo['question'] != $fauxglobal) {
-				$fauxglobal = $foo['question'];
-				$Solosondage = new Survey($_SESSION["login"], $fauxglobal);
-				array_push($Sondages, $Solosondage);
-				$c++;
-			}
-			$Soloresponse = new Response($Solosondage, $foo['title'], intval($foo['count']));
-			$Soloresponse->setId(intval($foo['id']));
-			$Sondages[$c]->addResponse($Soloresponse);*/
+			$survey->setResponses($this->loadResponsesBySurveyId($id, $survey));
 		}
-        //return $survey;
+        return $survey;
     }
 
     private function loadResponsesBySurveyId($id, $survey)
     {
-		$requete = "SELECT * FROM response WHERE id_survey = $id";
+		$requete = "SELECT * FROM responses WHERE id_survey = $id";
 		$responses = array();
 		$result = $this->connection->query($requete);
-		
-		foreach($result as $foo) {
-			$pusher = new Response($survey, $foo['title']);
-			
-			array_push($responses,);
-			
+		foreach($result as $bar) {
+			$pusher = new Response($survey, $bar['title']);
+			$pusher->setId(intval($bar['id']));
+			array_push($responses,$pusher);
 		}
-        return $response;
+		if(count($responses) < 5) {
+			for($i = 0; $i < (5 - count($responses)); $i++){
+				array_push($responses,new Response($survey, ""));
+			}
+		}
+        return $responses;
     }
     /**
      * modifie le contenu de l'enoncé d'un sondage dans la base de donnée et met à jour les indentifiants
@@ -394,7 +385,7 @@ class Database
      */
     public function updateSurvey($id, $newQuestion)
     {
-        if ($this->connection->exec("UPDATE surveys SET question=$newQuestion WHERE id = $id")) {
+        if ($this->connection->exec("UPDATE surveys SET question='$newQuestion' WHERE id = $id")) {
             return true;
         } else {
 			return false;
@@ -402,9 +393,9 @@ class Database
     }
 
 
-    public function updateResponse($is, $newResponse)
+    public function updateResponse($id, $newResponse)
     {
-        if ($this->connection->exec("UPDATE response SET title=$newResponse WHERE id = $id")) {
+        if ($this->connection->exec("UPDATE responses SET title='$newResponse', count=0 WHERE id = $id")) {
             return true;
         } else {
 			return false;
