@@ -10,6 +10,7 @@
 					$commentaires = $Database->loadComment($survey->getId());
 					$survey->computePercentages();
 					require("survey.inc.php");
+					require("commentForm.inc.php");
 				}
 		?>
 	</ul>

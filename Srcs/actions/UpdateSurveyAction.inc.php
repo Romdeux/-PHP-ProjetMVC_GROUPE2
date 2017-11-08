@@ -23,7 +23,9 @@ class UpdateSurveyAction extends Action {
                     for($i=1 ; $i<=5; $i++){
                         if($_POST['responseSurvey'.$i]!=''){
                             $this->database->updateResponse($_POST['ResponseId'.$i], $_POST['responseSurvey'.$i]);
-                        }
+                        } else {
+							$this->database->deleteResponse($_POST['ResponseId'.$i]);
+						}
                     }
                     $this->setMessageView("Merci, nous avons modifié votre sondage");
                 }

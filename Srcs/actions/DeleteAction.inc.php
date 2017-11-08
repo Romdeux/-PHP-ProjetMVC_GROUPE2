@@ -18,7 +18,7 @@ class DeleteAction extends Action {
 	 */	
 	public function run() {
 		
-		if($this->database->deleteSurvey(intval($_POST['Id']))) {
+		if($this->database->deleteSurvey(intval($_POST['Id']),$_SESSION['login'])) {
 			$this->setMessageView("Votre sondage a été supprimé. RIP", "alert-success");
 		} else {
 			$this->setMessageView("Erreur, seul le propriétaire peut supprimer son sondage", "alert-failure");

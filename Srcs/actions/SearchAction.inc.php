@@ -25,6 +25,7 @@ class SearchAction extends Action {
 			if($foo['question'] != $fauxglobal) {
 				$fauxglobal = $foo['question'];
 				$Solosondage = new Survey($foo['owner'], $fauxglobal);
+				$Solosondage->setId(intval($foo['idsurv']));
 				array_push($Sondages, $Solosondage);
 				$c++;
 			}

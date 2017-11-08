@@ -1,7 +1,4 @@
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-
-<br><br><br>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <li class="media well">
 	<div class="media-body">
 		<h4 class="media-heading"><?php echo $survey->getQuestion() ?></h4>
@@ -22,7 +19,8 @@
 	  } 
 		?>
         <div class="control-group">
-            <div class="span2 offset5">
+            <?php if(isset($_SESSION['login']) && $survey->getOwner() == $_SESSION['login']) { ?>
+			<div class="span2 offset5">
                 <form id="formedit<?php echo $survey->getId(); ?>" method="post" action="index.php?action=UpdateSurveyForm">
 					<input type="hidden" name="Id" value="<?php echo $survey->getId(); ?>" >
                     <a onclick="document.getElementById('formedit<?php echo $survey->getId(); ?>').submit();"><span class="glyphicon glyphicon-edit"></span></a>
@@ -34,6 +32,32 @@
                     <a onclick="document.getElementById('formdelete<?php echo $survey->getId(); ?>').submit();"><span class="glyphicon glyphicon-trash"></span></a>
                 </form>
             </div>
+			<?php } ?>
+
+
+            <!--<div class="fluid-row">
+                <div class="span2">Réponse 1</div>
+                <div class="span2 progress progress-striped active">
+                    <div class="bar" style="width: 20%"></div>
+                </div>
+                <span class="span1">(20%)</span>
+                <form class="span1" method="post" action="<?php echo $_SERVER['PHP_SELF'].'?action=Vote';?>">
+                    <input type="hidden" name="responseId" value="1">
+                    <input type="submit" style="margin-left:5px" class="span1 btn btn-small btn-danger" value="Voter">
+                </form>
+            </div>
+
+            <div class="fluid-row">
+                <div class="span2">Réponse 2</div>
+                <div class="span2 progress progress-striped active">
+                    <div class="bar" style="width: 80%"></div>
+                </div>
+                <span class="span1">(80%)</span>
+                <form class="span1" method="post" action="<?php echo $_SERVER['PHP_SELF'].'?action=Vote';?>">
+                    <input type="hidden" name="responseId" value="2">
+                    <input type="submit" style="margin-left:5px" class="span1 btn btn-small btn-danger" value="Voter">
+                </form>
+            </div>-->
+		
 	</div>
 </li>
-<?php require_once("addcommentform.inc.php"); ?>

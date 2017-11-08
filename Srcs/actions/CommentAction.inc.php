@@ -17,11 +17,17 @@ class CommentAction extends Action {
 	 * @see Action::run()
 	 */	
 	public function run() {
-		$comment = $_POST['commentaire'];
-		
-		/*TODO*/
+        if ($this->getSessionLogin() === null) {
+            $this->setMessageView("Vous devez être authentifié.", "alert-error");
+            return;
+        } else {
+            if (isset($_POST['commentaire'])) {
+				$commentaire = htmlentities($_POST['commentaire']);
+                $this->database->addComment($_SESSION['login'],$_POST['Id'],$commentaire);
+            }
+            $this->setMessageView("Commentaire posté");
+        }
 	}
-
 }
 
 ?>

@@ -5,7 +5,6 @@ require_once("model/Response.inc.php");*/
 
 class Database
 {
-
     private $connection;
 
     /**
@@ -16,7 +15,7 @@ class Database
     {
         $dbHost = "localhost";
         $dbBd = "sondages";
-        $dbPass = "";
+        $dbPass = "Asperge23@";
         $dbLogin = "root";
         $url = 'mysql:host=' . $dbHost;
         //$url = 'sqlite:database.sqlite';
@@ -210,29 +209,30 @@ class Database
         return true;
     }
 	
-	public function addComments($owner, $comment){
-        if ($this->connection->exec("INSERT INTO comments (owner, comment) VALUES (" . $owner .", '" . $comment . "');")) {
-            return true;
-        } else {
-            return false;
-        }
+	public function addComment($owner, $idsurvey,$comment){
+		var_dump("INSERT INTO comments VALUES (null,$idsurvey,\"$owner\",\"$comment\");");
+        if($this->connection->exec("INSERT INTO comments VALUES (null,$idsurvey,\"$owner\",\"$comment\");") !== null) {
+			return true;
+		} else {
+			return false;
+		}
     }
 	
 	public function loadComment($id){
-//		if(true) {
-//			$requete = "SELECT * FROM comments WHERE id_survey = '$id'";
-//			$retour = array();
-//			$retour[0] = array();
-//			$retour[1] = array();
-//
-//			foreach ($this->connection->query($requete) as $row) {
-//				array_push($retour[0],$row['owner']);
-//				array_push($retour[1],$row['comment']);
-//			}
-//			return $retour;
-//		} else {
-//			return false;
-//		}
+		if(true) {
+			$requete = "SELECT * FROM comments WHERE id_survey = '$id'";
+			$retour = array();
+			$retour[0] = array();
+			$retour[1] = array();
+
+			foreach ($this->connection->query($requete) as $row) {
+				array_push($retour[0],$row['owner']);
+				array_push($retour[1],$row['comment']);
+			}
+			return $retour;
+		} else {
+			return false;
+		}
 	}
 
     /**
@@ -317,7 +317,7 @@ class Database
      */
     public function loadSurveysByKeyword($keyword)
     {
-		$requete = "SELECT surveys.question, surveys.owner, responses.title, responses.count, responses.id FROM surveys INNER JOIN responses ON surveys.id = responses.id_survey WHERE surveys.question LIKE '%$keyword%'";
+		$requete = "SELECT surveys.id as idsurv, surveys.question, surveys.owner, responses.title, responses.count, responses.id FROM surveys INNER JOIN responses ON surveys.id = responses.id_survey WHERE surveys.question LIKE '%$keyword%'";
         $result = $this->connection->query($requete);
 		if ($result === false) {
             return false;
@@ -430,12 +430,20 @@ class Database
     }
 
 
-    public function deleteSurvey($id){
-        if ($this->connection->exec("DELETE FROM surveys WHERE id = $id")) {
-            return true;
-        } else {
-			return false;
-		}
+    public function deleteSurvey($id, $user){
+		if ($this->connection->exec("DELETE FROM surveys WHERE id = $id AND owner = '$user'")) {
+				return true;
+			} else {
+				return false;
+			}
+    }
+	
+    public function deleteResponse($id){
+		if ($this->connection->exec("DELETE FROM responses WHERE id = $id")) {
+				return true;
+			} else {
+				return false;
+			}
     }
 
 }
