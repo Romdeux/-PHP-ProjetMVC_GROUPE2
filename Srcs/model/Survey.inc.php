@@ -18,7 +18,11 @@ class Survey {
 	}
 
 	public function getId() {
-		return $this->id;
+		if ($this->id != null) {
+			return $this->id;
+		} else {
+			return "null";
+		}
 	}
 
 	public function getOwner() {
@@ -42,9 +46,13 @@ class Survey {
 	}
 	
 	public function computePercentages() {
-		/* TODO START */
-		/* TODO END */
+		$total = 0;
+		for($i = 0; $i < count($this->responses); $i++) {
+			$total += $this->responses[$i]->getCount();
+		}
+		for($i = 0; $i < count($this->responses); $i++) {
+			$this->responses[$i]->computePercentage($total);
+		}
 	}
-
 }
 ?>

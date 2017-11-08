@@ -15,8 +15,28 @@ class SearchAction extends Action {
 	 * @see Action::run()
 	 */
 	public function run() {
-		/* TODO START */
-		/* TODO END */
+		$fauxglobal = "";
+		$Solosondage;
+		$Soloresponse;
+		$Sondages = array();
+		$c = -1;
+		
+		foreach($this->database->loadSurveysByKeyword($_POST["keyword"]) as $foo) {
+			if($foo['question'] != $fauxglobal) {
+				$fauxglobal = $foo['question'];
+				$Solosondage = new Survey($foo['owner'], $fauxglobal);
+				$Solosondage->setId(intval($foo['idsurv']));
+				array_push($Sondages, $Solosondage);
+				$c++;
+			}
+			$Soloresponse = new Response($Solosondage, $foo['title'], intval($foo['count']));
+			$Soloresponse->setId(intval($foo['id']));
+			$Sondages[$c]->addResponse($Soloresponse);
+		}
+		
+		
+		$this->setView(getViewByName("Surveys"));
+		$this->getView()->setSurveys($Sondages);
 	}
 
 }

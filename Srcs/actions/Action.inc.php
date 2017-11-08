@@ -1,6 +1,8 @@
 <?php
 
 require_once("model/Database.inc.php");
+require_once("model/Survey.inc.php");
+require_once("model/Response.inc.php");
 
 abstract class Action {
 	private $view;

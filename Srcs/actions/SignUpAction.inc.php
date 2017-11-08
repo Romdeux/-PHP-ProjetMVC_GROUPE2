@@ -1,6 +1,8 @@
 <?php
 
 require_once("actions/Action.inc.php");
+//require_once("../views/templates/signupform.inc.php");
+//equire_once("views/templates/signupform.inc.php");
 
 class SignUpAction extends Action {
 
@@ -23,6 +25,24 @@ class SignUpAction extends Action {
 	public function run() {
 		/* TODO START */
 		/* TODO END */
+        $newUser = new Database();
+        $nickname = $_POST['signUpLogin'];
+        $password = $_POST['signUpPassword'];
+        $confirm = $_POST['signUpPassword2'];
+
+
+        if (strcmp($password, $confirm) !== 0) {
+            $this->setMessageView("Le mot de passe et sa confirmation sont différents.");
+        }
+        else {
+            $addAction = $newUser->addUser($nickname, $password);
+            if ($addAction === true) {
+                $this->setMessageView("Inscription bien prise en compte");
+            } else {
+                $this->setSignUpFormView($addAction);
+            }
+        }
+
 	}
 
 	private function setSignUpFormView($message) {
