@@ -22,8 +22,8 @@
 		</div>
 	<?php } ?>
 	
-<div class="container" style="padding-left: 0px;float: none;">
-<form class="span7 offset2" style="margin-left: 0px;" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?action=Comment" >
+<div class="container" style="padding-left: 0px;">
+<form class="span7 offset2" style="margin-left: 0px;float: none;" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?action=Comment" >
         <div class="media well">
         <h5 class="media-heading">• Ajouter un commentaire</h5>
         <input type="text" name="commentaire" class="span6"/>
