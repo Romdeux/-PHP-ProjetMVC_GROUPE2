@@ -44,6 +44,10 @@ class Database
 
         $this->connection->exec("CREATE TABLE IF NOT EXISTS users (
 									nickname CHAR(20) NOT NULL ,
+									nom CHAR(64) NOT NULL ,
+									prenom CHAR(32) NOT NULL ,
+									mail VARCHAR(128) NOT NULL ,
+									avatar VARCHAR(148),
 									password CHAR(50) NOT NULL ) ENGINE = InnoDB;");
 
         $this->connection->exec("CREATE TABLE IF NOT EXISTS surveys (
@@ -102,6 +106,16 @@ class Database
         return true;
     }
 
+    private function checkMailValidity($mail) {
+        $parse = explode("@",$mail);
+
+        if(count($parse) == 2) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Vérifie si un mot de passe est valide, c'est-à-dire,
      * s'il contient entre 3 et 10 caractères.
@@ -134,6 +148,24 @@ class Database
 		if(isset($noms)) {
 			foreach ($noms as $row) {
 				if ($nickname == $row) {
+					return false;
+				}
+			}
+		}
+        return true;
+    }
+
+    private function checkMailAvailability($mail)
+    {
+        $requete = "SELECT mail FROM users";
+
+        foreach ($this->connection->query($requete) as $row) {
+            $mails[] = $row['mail'];
+        }
+
+		if(isset($mails)) {
+			foreach ($mails as $row) {
+				if ($mail == $row) {
 					return false;
 				}
 			}
@@ -186,10 +218,12 @@ class Database
      * @param string $password Mot de passe.
      * @return boolean|string True si le couple a été ajouté avec succès, un message d'erreur sinon.
      */
-    public function addUser($nickname, $password)
+    public function addUser($nickname, $password, $fName , $lName, $mail)
     {
         $validitycheckNickname = $this->checkNicknameValidity($nickname);
         $availabilitycheckNickname = $this->checkNicknameAvailability($nickname);
+        $validitycheckMail = $this->checkMailValidity($mail);
+        $availabilitycheckMail = $this->checkMailAvailability($mail);
         $validitycheckPassword = $this->checkPasswordValidity($password);
 
         if (!$validitycheckNickname) {
@@ -200,15 +234,27 @@ class Database
             return "Le pseudo existe déjà.";
         }
 
+        if (!$validitycheckMail) {
+            return "L'adresse mail n'est pas valide.";
+        }
+
+        if (!$availabilitycheckMail) {
+            return "Il existe déjà un compte lié à cette adresse mail.";
+        }
+
         if (!$validitycheckPassword) {
             return "Le mot de passe doit contenir entre 3 et 10 caractères.";
         }
 
-        $this->connection->exec("INSERT INTO users (nickname, password) VALUES ('$nickname', '" . $this->hashpass($password) . "');");
+        $this->connection->exec("INSERT INTO users (nickname, nom, prenom, mail, avatar, password) VALUES ('$nickname', '$lName' , '$fName' , '$mail' ,null, '" . $this->hashpass($password) . "');");
 
         return true;
     }
-	
+
+    public function insertAvatar($image,$nomuser) {
+        $this->connection->exec("UPDATE users set avatar='$image' WHERE nickname='$nomuser'");
+    }
+
 	public function addComment($owner, $idsurvey,$comment){
 		var_dump("INSERT INTO comments VALUES (null,$idsurvey,\"$owner\",\"$comment\");");
         if($this->connection->exec("INSERT INTO comments VALUES (null,$idsurvey,\"$owner\",\"$comment\");") !== null) {
